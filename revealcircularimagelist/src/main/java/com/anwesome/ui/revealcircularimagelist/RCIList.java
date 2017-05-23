@@ -11,7 +11,7 @@ public class RCIList {
     private Activity activity;
     private boolean isShown = false;
     private ScrollView scrollView;
-    public RCIList(Activity activity){
+    public RCIList(Activity activity) {
         this.activity = activity;
         scrollView = new ScrollView(activity);
     }
