@@ -17,7 +17,7 @@ public class RevealCircularView extends View {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Bitmap bitmap;
     private int time = 0,w,h,bitmapSize;
-
+    private RevealFilter revealFilter;
     public RevealCircularView(Context context, Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
@@ -28,6 +28,7 @@ public class RevealCircularView extends View {
             h = canvas.getHeight();
             bitmapSize = Math.min(w,h)/3;
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmapSize,bitmapSize,true);
+            revealFilter = new RevealFilter();
         }
         canvas.drawColor(backColor);
         paint.setStrokeWidth(w/10);
@@ -40,16 +41,18 @@ public class RevealCircularView extends View {
         canvas.clipPath(path);
         canvas.drawBitmap(bitmap,w/2-bitmapSize/2,h/2-bitmapSize/2,paint);
         canvas.restore();
+        revealFilter.draw(canvas);
         time++;
     }
     public void setBackColor(int backColor) {
         this.backColor = backColor;
     }
     public void update(float factor) {
+        revealFilter.update(factor);
         postInvalidate();
     }
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN && revealFilter.handleTouch(event.getX(),event.getY())) {
 
         }
         return true;
@@ -66,6 +69,9 @@ public class RevealCircularView extends View {
         }
         public void update(float factor) {
             r = bitmapSize/2*(1-factor);
+        }
+        public boolean handleTouch(float x,float y) {
+            return  x>=w/2-bitmapSize/2 && x<=w/2+bitmapSize/2 && y>=h/2-bitmapSize/2 && y<=h/2+bitmapSize/2;
         }
     }
 }
