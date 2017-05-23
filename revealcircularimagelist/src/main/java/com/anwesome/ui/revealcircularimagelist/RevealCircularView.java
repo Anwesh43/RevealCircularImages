@@ -36,7 +36,7 @@ public class RevealCircularView extends View {
             animationHandler = new AnimationHandler();
         }
         canvas.drawColor(backColor);
-        paint.setStrokeWidth(w/10);
+        paint.setStrokeWidth(w/30);
         paint.setColor(Color.GRAY);
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(w/2,h/2,bitmapSize/2,paint);
