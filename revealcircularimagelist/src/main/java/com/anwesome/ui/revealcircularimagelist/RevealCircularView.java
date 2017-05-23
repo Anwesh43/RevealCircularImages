@@ -21,6 +21,7 @@ public class RevealCircularView extends View {
     private Bitmap bitmap;
     private int time = 0,w,h,bitmapSize;
     private RevealFilter revealFilter;
+    private AnimationHandler animationHandler;
     public RevealCircularView(Context context, Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
@@ -32,6 +33,7 @@ public class RevealCircularView extends View {
             bitmapSize = Math.min(w,h)/3;
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmapSize,bitmapSize,true);
             revealFilter = new RevealFilter();
+            animationHandler = new AnimationHandler();
         }
         canvas.drawColor(backColor);
         paint.setStrokeWidth(w/10);
@@ -56,7 +58,7 @@ public class RevealCircularView extends View {
     }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN && revealFilter.handleTouch(event.getX(),event.getY())) {
-
+            animationHandler.start();
         }
         return true;
     }
