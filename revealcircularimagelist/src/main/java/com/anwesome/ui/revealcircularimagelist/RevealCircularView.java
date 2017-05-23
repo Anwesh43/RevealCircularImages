@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -29,12 +30,17 @@ public class RevealCircularView extends View {
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmapSize,bitmapSize,true);
         }
         canvas.drawColor(backColor);
-        canvas.drawBitmap(bitmap,w/2-bitmapSize/2,h/2-bitmapSize/2,paint);
+
         paint.setStrokeWidth(w/10);
         paint.setColor(Color.GRAY);
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(w/2-bitmapSize/2,h/2-bitmapSize/2,bitmapSize/2,paint);
-
+        canvas.save();
+        Path path = new Path();
+        path.addCircle(w/2-bitmapSize/2,h/2-bitmapSize/2,bitmapSize/2, Path.Direction.CCW);
+        canvas.clipPath(path);
+        canvas.drawBitmap(bitmap,w/2-bitmapSize/2,h/2-bitmapSize/2,paint);
+        canvas.restore();
         time++;
 
     }
