@@ -30,7 +30,7 @@ public class RevealCircularView extends View {
         if(time == 0) {
             w = canvas.getWidth();
             h = canvas.getHeight();
-            bitmapSize = Math.min(w,h)/3;
+            bitmapSize = 2*Math.min(w,h)/3;
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmapSize,bitmapSize,true);
             revealFilter = new RevealFilter();
             animationHandler = new AnimationHandler();

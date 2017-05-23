@@ -18,7 +18,7 @@ public class ListLayout extends ViewGroup{
         for(int i=0;i<getChildCount();i++) {
             View child = getChildAt(i);
             measureChild(child,wspec,hspec);
-            hMax += h/3+h/30;
+            hMax += (h/3+h/30);
         }
         setMeasuredDimension(w,Math.max(h,hMax));
     }
@@ -32,12 +32,12 @@ public class ListLayout extends ViewGroup{
             h = size.y;
         }
     }
-    public void onLayout(boolean reloaded,int a,int b,int w,int h) {
+    public void onLayout(boolean reloaded,int a,int b,int wa,int ha) {
         int y = h/30;
         for(int i=0;i<getChildCount();i++) {
             View child = getChildAt(i);
             child.layout(w/20,y,19*w/20,y+h/3);
-            y+=h/3+h/30;
+            y+=(h/3+h/30);
         }
     }
     public void addImage(Bitmap bitmap) {
