@@ -30,19 +30,17 @@ public class RevealCircularView extends View {
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmapSize,bitmapSize,true);
         }
         canvas.drawColor(backColor);
-
         paint.setStrokeWidth(w/10);
         paint.setColor(Color.GRAY);
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(w/2-bitmapSize/2,h/2-bitmapSize/2,bitmapSize/2,paint);
+        canvas.drawCircle(w/2,h/2,bitmapSize/2,paint);
         canvas.save();
         Path path = new Path();
-        path.addCircle(w/2-bitmapSize/2,h/2-bitmapSize/2,bitmapSize/2, Path.Direction.CCW);
+        path.addCircle(w/2,h/2,bitmapSize/2, Path.Direction.CCW);
         canvas.clipPath(path);
         canvas.drawBitmap(bitmap,w/2-bitmapSize/2,h/2-bitmapSize/2,paint);
         canvas.restore();
         time++;
-
     }
     public void setBackColor(int backColor) {
         this.backColor = backColor;
@@ -55,5 +53,19 @@ public class RevealCircularView extends View {
 
         }
         return true;
+    }
+    private class RevealFilter {
+        private float r = 0;
+        public RevealFilter() {
+            r = bitmapSize/2;
+        }
+        public void draw(Canvas canvas) {
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(backColor);
+            canvas.drawCircle(w/2,h/2,r,paint);
+        }
+        public void update(float factor) {
+            r = bitmapSize/2*(1-factor);
+        }
     }
 }
