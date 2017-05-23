@@ -22,6 +22,10 @@ public class RevealCircularView extends View {
     private int time = 0,w,h,bitmapSize;
     private RevealFilter revealFilter;
     private AnimationHandler animationHandler;
+    private OnSelectionChangeListener onSelectionChangeListener;
+    public void setOnSelectionChangeListener(OnSelectionChangeListener onSelectionChangeListener) {
+        this.onSelectionChangeListener = onSelectionChangeListener;
+    }
     public RevealCircularView(Context context, Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
@@ -96,11 +100,12 @@ public class RevealCircularView extends View {
         }
         public void onAnimationEnd(Animator animator) {
             if(isAnimating) {
-                if(dir == 0) {
-
-                }
-                else {
-
+                if(onSelectionChangeListener != null) {
+                    if (dir == 0) {
+                        onSelectionChangeListener.onSelected();
+                    } else {
+                        onSelectionChangeListener.onUnSelected();
+                    }
                 }
                 dir = dir == 0?1:0;
                 isAnimating = false;

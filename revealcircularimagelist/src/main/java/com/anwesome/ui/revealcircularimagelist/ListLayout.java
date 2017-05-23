@@ -40,8 +40,9 @@ public class ListLayout extends ViewGroup{
             y+=(h/3+h/30);
         }
     }
-    public void addImage(Bitmap bitmap) {
+    public void addImage(Bitmap bitmap,OnSelectionChangeListener onSelectionChangeListener) {
         RevealCircularView revealCircularView = new RevealCircularView(getContext(),bitmap);
+        revealCircularView.setOnSelectionChangeListener(onSelectionChangeListener);
         addView(revealCircularView,new LayoutParams(9*w/10,h/3));
         requestLayout();
     }
